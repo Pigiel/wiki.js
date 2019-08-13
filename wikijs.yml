@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wiki-js
+  labels:
+    app: wiki-js
+    component: wiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiki-js
+      component: wiki
+  template:
+    metadata:
+      labels:
+        app: wiki-js
+        component: wiki
+    spec:
+      containers:
+      - name: wiki-js
+        image: requarks/wiki:beta
+        imagePullPolicy: IfNotPresent # Always
+        env:
+        - name: DB_TYPE
+          value: postgres
+        - name: DB_HOST
+          value: wiki-js-postgres
+        - name: DB_PORT
+          value: '5432'
+        - name: DB_USER
+          value: ' wikijs'
+        - name: DB_PASS
+          value: wikijspassword
+        - name: DB_NAME
+          value: wikijs
